@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node index.js",
     "dev": "node --watch index.js",
-    "deploy": "vercel deploy"
+    "deploy": "vercel deploy",
+    "build": "echo 'No build step specified'"
   },
   "author": "h1-14-node-react",
   "license": "ISC",
