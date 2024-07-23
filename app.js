@@ -42,7 +42,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
-app.use("/", indexRouter);
+app.use("/api", indexRouter);
 app.use('/users', userRouter)
 app.use('/patients', patientRouter)
 /*app.use('/api/v1/login', loginRouter);
