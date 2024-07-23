@@ -4,6 +4,7 @@
   "description": "AppWeb para proyecto justina.io",
   "main": "app.js",
   "scripts": {
+    "start": "node app.js",
     "dev": "node --watch app.js"
   },
   "author": "h1-14-node-react",
