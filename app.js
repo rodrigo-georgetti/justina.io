@@ -42,7 +42,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
-app.use("/api", indexRouter);
+app.use("/", indexRouter);
 app.use('/users', userRouter)
 app.use('/patients', patientRouter)
 /*app.use('/api/v1/login', loginRouter);
@@ -64,11 +64,11 @@ app.use((err, req, res, next) => {
  });
  
  // Middleware para capturar todos los errores
-app.use((err, req, res, next) => {
-   console.error(err.stack);
-   resFail(res, 500, "Internal server error");
-   next();
- });
+// app.use((err, req, res, next) => {
+//    console.error(err.stack);
+//    resFail(res, 500, "Internal server error");
+//    next();
+//  });
 
 // error handler
 app.use(function (err, req, res, next) {
