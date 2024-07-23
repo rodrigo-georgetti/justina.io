@@ -2,10 +2,12 @@
   "name": "justina.io-h1-14",
   "version": "1.0.0",
   "description": "AppWeb para proyecto justina.io",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
+    "build": "echo 'No build step required'",
     "start": "node index.js",
-    "dev": "node --watch index.js"
+    "dev": "node --watch index.js",
+    "deploy": "vercel deploy"
   },
   "author": "h1-14-node-react",
   "license": "ISC",
