@@ -9,7 +9,7 @@ db.connection = new Sequelize(config.database, config.username, config.password,
   });
 
   // Vinculamos nuestos modelos a DB
-  db.Users = require('./models/Users.js')(db.connection, DataTypes)
+  db.Users = require('./models/users.js')(db.connection, DataTypes)
   db.Ubicaciones = require('./models/Ubicaciones.js')(db.connection, DataTypes)
   db.Tratamientos = require('./models/Tratamientos.js')(db.connection, DataTypes)
   db.Recetas = require('./models/Recetas.js')(db.connection, DataTypes)
