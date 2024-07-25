@@ -1,25 +1,87 @@
-const User = require("../database/models/users");
+const { Users, Ubicaciones } = require("../database/db");
 
-async function getUsers(req, res) {
-  const userId = req.params.id;
+const getUsers = async (req, res) => {
+  const { id } = req.params;
 
   try {
-    if (userId) {
-      const user = await User.findByPk(userId);
-      if (user) {
-        res.status(200).json(user);
+    if (id) {
+      const User = await Users.findByPk(id, {
+        attributes: [
+          "id",
+          "dniType",
+          "dni",
+          "password",
+          "firstName",
+          "lastName",
+          "birthday",
+          "role",
+          "gender",
+          "email",
+          "phone",
+          "active",
+        ],
+        include: [
+          {
+            model: Ubicaciones,
+            as: "domicilio",
+            attributes: [
+              "id",
+              "usuariosId",
+              "pais",
+              "provincias",
+              "localidad",
+              "direccion",
+              "active",
+            ],
+          },
+        ],
+      });
+
+      if (User) {
+        res.status(200).json(User);
       } else {
-        res.status(404).json({ message: "Usuario no encontrado" });
+        res.status(404).json({ message: "Users no encontrado" });
       }
     } else {
-      const users = await User.findAll();
+      const users = await Users.findAll({
+        attributes: [
+          "id",
+          "dniType",
+          "dni",
+          "password",
+          "firstName",
+          "lastName",
+          "birthday",
+          "role",
+          "gender",
+          "email",
+          "phone",
+          "active",
+        ],
+        include: [
+          {
+            model: Ubicaciones,
+            as: "domicilio",
+            attributes: [
+              "id",
+              "usuariosId",
+              "pais",
+              "provincias",
+              "localidad",
+              "direccion",
+              "active",
+            ],
+          },
+        ],
+      });
+
       res.status(200).json(users);
     }
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: "Error al obtener usuarios", error });
+    console.error("Error al obtener la Users", error);
+    res.status(500).json({ message: "Error al obtener las Users", error });
   }
-}
+};
 
 const createUsers = async (req, res) => {
   const {
@@ -28,7 +90,7 @@ const createUsers = async (req, res) => {
     password,
     firstName,
     lastName,
-    brithday,
+    birthday,
     role,
     gender,
     email,
@@ -37,13 +99,13 @@ const createUsers = async (req, res) => {
   } = req.body;
 
   try {
-    const newUser = await User.create({
+    const newUser = await Users.create({
       dniType,
       dni,
       password,
       firstName,
       lastName,
-      brithday,
+      birthday,
       role,
       gender,
       email,
@@ -61,74 +123,182 @@ const createUsers = async (req, res) => {
 };
 
 const updateUsers = async (req, res) => {
-  const userId = req.params.id;
+  const { id } = req.params;
   const {
+    dniType,
     dni,
+    password,
     firstName,
     lastName,
-    eMail,
-    birthdate,
+    birthday,
+    role,
     gender,
-    password,
+    email,
+    phone,
     active,
   } = req.body;
 
   try {
-    const user = await User.findByPk(userId);
-
-    if (!user) {
-      return res.status(404).json({ message: "Usuario no encontrado" });
+    const User = await Users.findByPk(id, {
+      attributes: [
+        "id",
+        "dniType",
+        "dni",
+        "password",
+        "firstName",
+        "lastName",
+        "birthday",
+        "role",
+        "gender",
+        "email",
+        "phone",
+        "active",
+      ],
+      include: [
+        {
+          model: Ubicaciones,
+          as: "domicilio",
+          attributes: [
+            "id",
+            "usuariosId",
+            "pais",
+            "provincias",
+            "localidad",
+            "direccion",
+            "active",
+          ],
+        },
+      ],
+    });
+    if (!User) {
+      return res.status(404).json({ message: "User not found" });
     }
 
-    if (dni !== undefined) user.dni = dni;
-    if (firstName !== undefined) user.firstName = firstName;
-    if (lastName !== undefined) user.lastName = lastName;
-    if (eMail !== undefined) user.eMail = eMail;
-    if (birthdate !== undefined) user.birthdate = birthdate;
-    if (gender !== undefined) user.gender = gender;
-    if (password !== undefined) user.password = password;
-    if (active !== undefined) user.active = active;
-
-    await user.save();
-    const response = user.toJSON();
-    res.status(200).json({ message: "Usuario actualizado", response });
+    if (dniType !== undefined) User.dniType = dniType;
+    if (dni !== undefined) User.dni = dni;
+    if (password !== undefined) User.password = password;
+    if (firstName !== undefined) User.firstName = firstName;
+    if (lastName !== undefined) User.lastName = lastName;
+    if (birthday !== undefined) User.birthday = birthday;
+    if (role !== undefined) User.role = role;
+    if (gender !== undefined) User.gender = gender;
+    if (email !== undefined) User.email = email;
+    if (phone !== undefined) User.phone = phone;
+    if (active !== undefined) User.active = active;
+      await User.save();
+      res.status(200).json({ message: "User actualizado", User });
+    
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Error al actualizar usuario", error });
+    console.error("Error al actualizar User:", error);
+    res.status(500).json({ message: "Error al actualizar User", error });
   }
 };
 
 const logicalDeleteUsers = async (req, res) => {
   const userId = req.params.id;
+  const { active } = req.body;
+
+  if (typeof active !== 'boolean') {
+    return res.status(400).json({ message: "El campo 'active' debe ser un valor booleano" });
+  }
 
   try {
-    const user = await User.findByPk(userId);
+    
+    const user = await Users.findByPk(userId, {
+      attributes: [
+        "id",
+        "dniType",
+        "dni",
+        "password",
+        "firstName",
+        "lastName",
+        "birthday",
+        "role",
+        "gender",
+        "email",
+        "phone",
+        "active",
+      ],
+      include: [
+        {
+          model: Ubicaciones,
+          as: "domicilio",
+          attributes: [
+            "id",
+            "usuariosId",
+            "pais",
+            "provincias",
+            "localidad",
+            "direccion",
+            "active",
+          ],
+        },
+      ],
+    });
 
+  
     if (!user) {
       return res.status(404).json({ message: "Usuario no encontrado" });
     }
 
-    user.active = false;
+    user.active = active;
     await user.save();
 
-    res.status(200).json({ message: "Usuario eliminado lógicamente" });
+    const status = user.active ? "activado" : "desactivado";
+    res.status(200).json({ message: `Usuario ${status}` });
   } catch (error) {
+    
     console.error(error);
-    res.status(500).json({ message: "Error al eliminar usuario", error });
+    res.status(500).json({ message: "Error al actualizar el estado del usuario", error });
   }
 };
+
+
+
 const physicalDeleteUsers = async (req, res) => {
-  const userId = req.params.id;
+  const { id } = req.params;
+
   try {
-    const user = await User.findByPk(userId);
-    if (user) {
-      await user.destroy();
-      res.status(200).json({ message: "Usuario eliminado de la DB" });
-    } else {
-      res.status(404).json({ message: "Usuario no encontrado" });
+    const User = await Users.findByPk(id, {
+      attributes: [
+        "id",
+        "dniType",
+        "dni",
+        "password",
+        "firstName",
+        "lastName",
+        "birthday",
+        "role",
+        "gender",
+        "email",
+        "phone",
+        "active",
+      ],
+      include: [
+        {
+          model: Ubicaciones,
+          as: "domicilio",
+          attributes: [
+            "id",
+            "usuariosId",
+            "pais",
+            "provincias",
+            "localidad",
+            "direccion",
+            "active",
+          ],
+        },
+      ],
+    });
+    if (!User) {
+      return res.status(404).json({ message: "Usuario no encontrado" });
     }
+    await User.destroy();
+      res.status(200).json({ message: "Users eliminada" });
+    
   } catch (error) {
-    res.status(500).json({ message: "Error al eliminar usuario", error });
+    console.error("Error al eliminar Users:", error);
+    res.status(500).json({ message: "Error al eliminar Users", error });
   }
 };
 

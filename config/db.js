@@ -1,18 +1,18 @@
-const {
+const {database,
+username,
+password,host, dialect, port} = require( "./config.js");
+const Sequelize  =  require("sequelize");
+
+const connectMySql = new Sequelize(
   database,
   username,
   password,
-  host,
-  dialect,
-  port,
-} = require("./config.js");
-const Sequelize = require("sequelize");
-
-const connectMySql = new Sequelize(database, username, password, {
-  host: host,
-  dialect: dialect,
-  port: port,
-});
+  {
+    host: host,
+    dialect: dialect,
+    port: port
+  },
+);
 
 module.exports = async function connectDb() {
   try {
@@ -23,4 +23,4 @@ module.exports = async function connectDb() {
   } catch (error) {
     console.log("Error de conexion a la DB =", error);
   }
-};
+}
