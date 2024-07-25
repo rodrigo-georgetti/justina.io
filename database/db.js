@@ -26,7 +26,7 @@ db.connection = new Sequelize(config.database, config.username, config.password,
   db.PersonalMedico = require('./models/PersonalMedico.js')(db.connection, DataTypes)
   db.PersonalMedicoPaciente = require('./models/PersonalMedico.js')(db.connection, DataTypes)
 
-  // Asociar los modelos
+  // Asociar los modelos **
  db.Users.associate(db)
  db.Ubicaciones.associate(db)
  db.Tratamientos.associate(db)
@@ -42,5 +42,5 @@ db.connection = new Sequelize(config.database, config.username, config.password,
  db.Patologias.associate(db) 
  db.PersonalMedico.associate(db)
  db.PersonalMedicoPaciente.associate(db)
-
+  
   module.exports = db
