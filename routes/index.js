@@ -1,10 +1,10 @@
-const express = require( 'express');
+const express = require("express");
+const userRouter = require("./UsersRoutes.js");
+const patientRouter = require("./PatientsRoutes.js");
 
 const router = express.Router();
 
-/* GET home page. */
-router.get('/', function (req, res, next) {
-   res.send("Hola mundo...");
-});
+router.use("/users", userRouter);
+router.use("/patients", patientRouter);
 
 module.exports = router;
