@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Pacientes.init(
     {
-      // id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+       id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
       entidadesId: { type: DataTypes.INTEGER },
       financiadoresId: { type: DataTypes.INTEGER },
       personalMedicoId: { type: DataTypes.INTEGER },

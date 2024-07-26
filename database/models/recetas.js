@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Recetas.init(
     {
-      // id: { type: DataTypes.INTEGER, primarykey: true, autoIncrement: true },
+       id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
       description: { type: DataTypes.STRING, allowNull: false },
       tratamientosId: { type: DataTypes.INTEGER, allowNull: false },
       medicamentosId: { type: DataTypes.INTEGER, allowNull: false },

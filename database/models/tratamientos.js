@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Tratamientos.init(
     {
-      // id: { type: DataTypes.INTEGER, primarykey: true, autoIncrement: true },
+       id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
       description: { type: DataTypes.STRING, allowNull: false },
       patologiasId: { type: DataTypes.INTEGER, allowNull: false },
       pacientesId: { type: DataTypes.INTEGER, allowNull: false },

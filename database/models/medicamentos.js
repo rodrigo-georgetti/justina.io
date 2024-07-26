@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
         }
   }
   Medicamentos.init({
-      // id: {type: DataTypes.INTEGER, primarykey: true, autoIncrement:true},
+       id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement:true},
       name: {type: DataTypes.STRING, allowNull: false},
       description: {type: DataTypes.STRING, allowNull: false}, 
       patologiasId: {type: DataTypes.INTEGER},

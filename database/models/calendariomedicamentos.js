@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   CalendarioMedicamentos.init(
     {
-      //id: { type: DataTypes.INTEGER, primarykey: true, autoIncrement: true },
+      id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
       time: { type: DataTypes.STRING, allowNull: false },
       description: { type: DataTypes.STRING, allowNull: false },
       medicamentosId: { type: DataTypes.INTEGER },
