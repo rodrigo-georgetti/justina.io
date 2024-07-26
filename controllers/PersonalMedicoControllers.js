@@ -1,33 +1,46 @@
 const { PersonalMedico } = require("../database/db");
 
-module.exports = {
-  async All(req, res) {
-    let personalMedico = await PersonalMedico.findAll({
-      include: {
-      association: "Especialidad"
-  }});
-    res.json(personalMedico);
-  },
-};
+// module.exports = {
+//   async All(req, res) {
+//     let personalMedico = await PersonalMedico.findAll({
+//       include: {
+//       association: "Especialidad"
+//   }});
+//     res.json(personalMedico);
+//   },
+// };
 
 async function getPersonalMedico(req, res) {
-    const patientId = req.params.id;
+    const personalMedicoId = req.params.id;
     
     try {
-        if (patientId) {
-            const patient = await Patients.findByPk(patientId);
-            if (patient) {
-                res.status(200).json(patient);
+        if (personalMedicoId) {
+            const personalMedico = await PersonalMedico.findByPk(personalMedicoId, {attributes: [
+                "id",
+                "especialidadesId",
+                "usuariosId",
+                "numeroMatricula",
+                "active",
+              ]});
+            if (personalMedico) {
+                res.status(200).json(personalMedico);
             } else {
-                res.status(404).json({ message: 'Paciente no encontrado' });
+                res.status(404).json({ message: 'Personal Médico no encontrado' });
             }
         } else {
-            const patients = await Patients.findAll();
-            res.status(200).json(patients);
+            const personalMedico = await PersonalMedico.findAll({attributes: [
+                "id",
+                "especialidadesId",
+                "usuariosId",
+                "numeroMatricula",
+                "active",
+              ]});
+            console.log(personalMedico);
+            res.status(200).json(personalMedico);
         }
     } catch (error) {
-        console.error('Error al obtener pacientes:', error);
-        res.status(500).json({ message: 'Error al obtener pacientes', error });
+        console.error('Error al obtener personal médico:', error);
+        res.status(500).json({ message: 'Error al obtener personal médico', error });
     }
 }
 
