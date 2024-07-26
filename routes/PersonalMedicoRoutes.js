@@ -25,7 +25,7 @@ router.delete('/:id', physicalDeletePersonalMedico);
 
 /**
  * @swagger
- * /:
+ * /api/v1/personalMedico:
  *   get:
  *     summary: Retrieve all PersonalMedico records
  *     tags: [PersonalMedico]
@@ -58,7 +58,7 @@ router.delete('/:id', physicalDeletePersonalMedico);
 
 /**
  * @swagger
- * /{id}:
+ * /api/v1/personalMedico/{id}:
  *   get:
  *     summary: Retrieve a PersonalMedico record by ID
  *     tags: [PersonalMedico]
