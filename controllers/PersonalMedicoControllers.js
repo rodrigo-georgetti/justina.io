@@ -1,4 +1,4 @@
-const { PersonalMedico } = require("../app/database/db");
+const { PersonalMedico } = require("../database/db");
 
 module.exports = {
   async All(req, res) {
@@ -10,7 +10,7 @@ module.exports = {
   },
 };
 
-async function getPatients(req, res) {
+async function getPersonalMedico(req, res) {
     const patientId = req.params.id;
     
     try {
@@ -32,7 +32,7 @@ async function getPatients(req, res) {
 }
 
 
-const createPatients = async (req, res) => {
+const createPersonalMedico = async (req, res) => {
     const { entidadesId, financiadoresId, personalMedicoId, patologiasId, usuarioID, factorSanguineo, Activo } = req.body;
   
     try {
@@ -54,7 +54,7 @@ const createPatients = async (req, res) => {
 };
 
 
-const updatePatients = async (req, res) => {
+const updatePersonalMedico = async (req, res) => {
     const patientId = req.params.id;
     const { entidadesId, financiadoresId, personalMedicoId, patologiasId, usuarioID, factorSanguineo, Activo } = req.body;
     
@@ -79,8 +79,24 @@ const updatePatients = async (req, res) => {
     }
 };
 
+const logicalDeletePersonalMedico = async (req, res) => {
+    const patientId = req.params.id;
+    
+    try {
+        const patient = await Patients.findByPk(patientId);
+        if (patient) {
+            await patient.destroy();
+            res.status(200).json({ message: 'Paciente eliminado' });
+        } else {
+            res.status(404).json({ message: 'Paciente no encontrado' });
+        }
+    } catch (error) {
+        console.error('Error al eliminar paciente:', error);
+        res.status(500).json({ message: 'Error al eliminar paciente', error });
+    }
+};
 
-const deletePatients = async (req, res) => {
+const physicalDeletePersonalMedico = async (req, res) => {
     const patientId = req.params.id;
     
     try {
@@ -98,8 +114,9 @@ const deletePatients = async (req, res) => {
 };
 
 module.exports = {
-    getPatients,
-    createPatients,
-    updatePatients,
-    deletePatients
+    getPersonalMedico,
+    createPersonalMedico,
+    updatePersonalMedico,
+    logicalDeletePersonalMedico,
+   physicalDeletePersonalMedico,
 };

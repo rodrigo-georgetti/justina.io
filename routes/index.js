@@ -3,6 +3,7 @@ const router = express.Router();
 
 // Routes
 const userRouter = require("./UsersRoutes");
+const personalMedicoRouter = require("./PersonalMedicoRoutes")
 const patientRouter = require("./PatientsRoutes");
 // const usersRouter = require('./UsersRoutes');
 // const loginRouter = require('./LoginRoutes');
@@ -18,11 +19,14 @@ const recetasRouter = require("./RecetasRoutes");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
-  res.send("Hola mundo...");
+  res.send("Bienvenidos a Justina.io backend deploy...");
 });
 
 //Users
 router.use("/api/v1/users", userRouter);
+
+//PeronalMedico
+router.use("api/v1/personalMedico", personalMedicoRouter)
 
 // Pacientes
 router.use("/api/v1/pacientes", patientRouter);
