@@ -17,7 +17,7 @@ const {
 
 /**
  * @swagger
- * /patients:
+ * /api/v1/pacientes:
  *   get:
  *     summary: Get all patients
  *     tags: [Patients]
@@ -35,7 +35,7 @@ router.get("/", getPatients);
 
 /**
  * @swagger
- * /patients/{id}:
+ * /api/v1/pacientes/{id}:
  *   get:
  *     summary: Get a patient by ID
  *     tags: [Patients]
@@ -60,7 +60,7 @@ router.get("/:id", getPatients);
 
 /**
  * @swagger
- * /patients:
+ * /api/v1/pacientes:
  *   post:
  *     summary: Create a new patient
  *     tags: [Patients]
@@ -80,7 +80,7 @@ router.post("/", createPatients);
 
 /**
  * @swagger
- * /patients/{id}:
+ * /api/v1/pacientes/{id}:
  *   put:
  *     summary: Update a patient by ID
  *     tags: [Patients]
@@ -109,7 +109,7 @@ router.put("/:id", updatePatients);
 
 /**
  * @swagger
- * /patients/{id}:
+ * /api/v1/pacientes/{id}:
  *   patch:
  *     summary: Logical delete a patient by ID
  *     tags: [Patients]
@@ -130,7 +130,7 @@ router.patch("/:id", logicalDeletePatients);
 
 /**
  * @swagger
- * /patients/{id}:
+ * /api/v1/pacientes/{id}:
  *   delete:
  *     summary: Physically delete a patient by ID
  *     tags: [Patients]
