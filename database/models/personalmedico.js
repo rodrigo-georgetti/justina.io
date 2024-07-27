@@ -7,6 +7,11 @@ module.exports = (sequelize, DataTypes) => {
         as: "Datos Personales",
         foreignKey: "usuariosId",
       });
+      PersonalMedico.belongsTo(models.Especialidades, {
+        foreignKey: "especialidadesId",
+        as: "especialidad"
+      });
+    
     }
   }
   PersonalMedico.init(
