@@ -9,9 +9,8 @@ module.exports = (sequelize, DataTypes) => {
       });
       PersonalMedico.belongsTo(models.Especialidades, {
         foreignKey: "especialidadesId",
-        as: "especialidad"
+        as: "especialidad",
       });
-    
     }
   }
   PersonalMedico.init(

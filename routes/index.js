@@ -30,9 +30,9 @@ router.use("/api/v1/personalMedico", personalMedicoRouter)
 
 // Pacientes
 router.use("/api/v1/pacientes", patientRouter);
-/*
+
 // Login
-router.use('/api/v1/login', loginRouter); */
+//router.use('/api/v1/login', loginRouter);
 
 // Entidades
 router.use("/api/v1/entidad", entidadRouter);

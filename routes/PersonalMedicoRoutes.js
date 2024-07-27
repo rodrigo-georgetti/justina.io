@@ -1,21 +1,21 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 const {
-   getPersonalMedico,
-   createPersonalMedico,
-   updatePersonalMedico,
-   logicalDeletePersonalMedico,
+  getPersonalMedico,
+  createPersonalMedico,
+  updatePersonalMedico,
+  logicalDeletePersonalMedico,
   physicalDeletePersonalMedico,
-} = require('../controllers/PersonalMedicoControllers');
+} = require("../controllers/PersonalMedicoControllers");
 
-router.get('/', getPersonalMedico);
-router.get('/:id', getPersonalMedico);
+router.get("/", getPersonalMedico);
+router.get("/:id", getPersonalMedico);
 
-router.post('/', createPersonalMedico); 
+router.post("/", createPersonalMedico);
 
-router.put('/:id', updatePersonalMedico);
+router.put("/:id", updatePersonalMedico);
 router.patch("/:id", logicalDeletePersonalMedico);
-router.delete('/:id', physicalDeletePersonalMedico);
+router.delete("/:id", physicalDeletePersonalMedico);
 /**
  * @swagger
  * tags:
@@ -147,4 +147,3 @@ router.delete('/:id', physicalDeletePersonalMedico);
  *         - numeroMatricula
  */
 module.exports = router;
-

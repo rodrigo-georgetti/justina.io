@@ -1,4 +1,4 @@
-const { PersonalMedico, Especialidades } = require("../database/db");
+const { PersonalMedico } = require("../database/db");
 
 async function getPersonalMedico(req, res) {
   const personalMedicoId = req.params.id;
@@ -51,12 +51,10 @@ const createPersonalMedico = async (req, res) => {
       active,
     });
 
-    res
-      .status(201)
-      .json({
-        message: "Personal Medico creado correctamente",
-        personalMedico: newPersonalMedico,
-      });
+    res.status(201).json({
+      message: "Personal Medico creado correctamente",
+      personalMedico: newPersonalMedico,
+    });
   } catch (error) {
     console.error("Error al crear personal médico:", error);
     res.status(500).json({ message: "Error al crear personal médico", error });
@@ -129,12 +127,10 @@ const logicalDeletePersonalMedico = async (req, res) => {
     res.status(200).json({ message: `Personal Médico ${status}` });
   } catch (error) {
     console.error("Error al actualizar el estado del Personal Médico:", error);
-    res
-      .status(500)
-      .json({
-        message: "Error al actualizar el estado del Personal Médico",
-        error,
-      });
+    res.status(500).json({
+      message: "Error al actualizar el estado del Personal Médico",
+      error,
+    });
   }
 };
 
