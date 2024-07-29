@@ -6,7 +6,7 @@ const userRouter = require("./UsersRoutes");
 const personalMedicoRouter = require("./PersonalMedicoRoutes");
 const patientRouter = require("./PatientsRoutes");
 // const usersRouter = require('./UsersRoutes');
-// const loginRouter = require('./LoginRoutes');
+const loginRouter = require('./LoginRoutes');
 const entidadRouter = require("./EntidadesRoutes");
 const fianciadoresRouter = require("./FinanciadoresRoutes");
 const ubicacionRouter = require("./UbicacionRoutes");
@@ -32,7 +32,7 @@ router.use("/api/v1/personalMedico", personalMedicoRouter);
 router.use("/api/v1/pacientes", patientRouter);
 
 // Login
-//router.use('/api/v1/login', loginRouter);
+router.use('/api/v1/login', loginRouter);
 
 // Entidades
 router.use("/api/v1/entidad", entidadRouter);
