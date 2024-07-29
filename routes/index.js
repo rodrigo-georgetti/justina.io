@@ -3,7 +3,7 @@ const router = express.Router();
 
 // Routes
 const userRouter = require("./UsersRoutes");
-const personalMedicoRouter = require("./PersonalMedicoRoutes")
+const personalMedicoRouter = require("./PersonalMedicoRoutes");
 const patientRouter = require("./PatientsRoutes");
 // const usersRouter = require('./UsersRoutes');
 // const loginRouter = require('./LoginRoutes');
@@ -26,7 +26,7 @@ router.get("/", function (req, res, next) {
 router.use("/api/v1/users", userRouter);
 
 //PeronalMedico
-router.use("/api/v1/personalMedico", personalMedicoRouter)
+router.use("/api/v1/personalMedico", personalMedicoRouter);
 
 // Pacientes
 router.use("/api/v1/pacientes", patientRouter);
