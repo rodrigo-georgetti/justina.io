@@ -12,17 +12,25 @@ const {
  * @swagger
  * tags:
  *   name: Patologias
- *   description: Patologias
+ *   description: API de Patologias
  */
 
 // Ver lista de Patologias.
 /**
  * @swagger
- * /api/v1/patologia/:
+ * /api/v1/patologia:
  *   get:
- *     summary: lista de todas las Patologias.
- *     description: Se envia el id de la patologia o sin params para la lista completa.
+ *     summary: Lista de todas las Patologias.
+ *     description: Devuelve una lista de todas las patologias. Si se proporciona un ID, devuelve la información de esa patologia.
  *     tags: [Patologias]
+ *     parameters:
+ *       - in: query
+ *         name: id
+ *         description: El ID de la patologia para ver su información.
+ *         schema:
+ *           type: string
+ *         required: false
+ *         example: 1
  *     responses:
  *       200:
  *         description: Lista de Patologias.
@@ -31,203 +39,172 @@ const {
  *       500:
  *         description: Error interno del servidor.
  */
+router.get("/", getPatologias);
 
-router
-  .get("/", getPatologias)
+// Informacion de una Patologia.
+/**
+ * @swagger
+ * /api/v1/patologia/{id}:
+ *   get:
+ *     summary: Información de una patologia.
+ *     description: Devuelve la información de una patologia específica por ID.
+ *     tags: [Patologias]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         description: El ID de la patologia para ver su información.
+ *         schema:
+ *           type: string
+ *         required: true
+ *         example: 1
+ *     responses:
+ *       200:
+ *         description: Información de la patologia.
+ *       400:
+ *         description: Error con el ID.
+ *       500:
+ *         description: Error interno del servidor.
+ */
+router.get("/:id", getPatologias);
 
-  // Informacion de las Patologias.
-  /**
-   * @swagger
-   * /api/v1/patologia/{id}:
-   *   get:
-   *     summary: Informacion de una patologia.
-   *     description: Se envia el id de la patologia o sin params para la lista completa.
-   *     tags: [Patologias]
-   *     parameters:
-   *       - in: path
-   *         name: id
-   *         description: El ID de la patologia para ver su informacion.
-   *         schema:
-   *           type: string
-   *         required: false
-   *         example: 1
-   *     responses:
-   *       200:
-   *         description: Lista de Patologias.
-   *       400:
-   *         description: Error con el ID.
-   *       500:
-   *         description: Error interno del servidor.
-   */
-  .get("/:id", getPatologias)
+// Crear Patologias.
+/**
+ * @swagger
+ * /api/v1/patologia:
+ *   post:
+ *     summary: Crear una nueva patologia.
+ *     description: EndPoint para crear registros nuevos.
+ *     tags: [Patologias]
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Patologias'
+ *       required: true
+ *     responses:
+ *       200:
+ *         description: Nueva patologia creada.
+ *       400:
+ *         description: Error al crear la patologia.
+ *       500:
+ *         description: Error interno del servidor.
+ */
+router.post("/", createPatologias);
 
-  // Crear Patologias.
-  /**
-   * @swagger
-   * /api/v1/patologia/:
-   *   post:
-   *     summary: Crear una nueva patologia
-   *     description: EndPoint para crear registro nuevos.
-   *     tags: [Patologias]
-   *     requestBody:
-   *       content:
-   *         application/json:
-   *           schema:
-   *             $ref: '#/components/schemas/Patologias'
-   *       required: true
-   *     parameters:
-   *       - in: body
-   *         name: name
-   *         description: name de la patologia.
-   *         schema:
-   *           type: string
-   *         required: true
-   *         example: Hospital Pediatrico
-   *       - in: body
-   *         name: description
-   *         schema:
-   *           type: string
-   *         required: true
-   *         description: Descripción de la patologia.
-   *         example: Especialistas en el tratamiento del cancer.
-   *       - in: body
-   *         name: active
-   *         schema:
-   *           type: boolean
-   *         required: true
-   *         description: Estar en false significa eliminado.
-   *         example: true
-   *     responses:
-   *       200:
-   *         description: Nueva patologia creada.
-   *       400:
-   *         description: Error al crear la patologia.
-   *       500:
-   *         description: Error interno del servidor
-   */
-  .post("/", createPatologias)
+// Actualizar Patologias.
+/**
+ * @swagger
+ * /api/v1/patologia/{id}:
+ *   put:
+ *     summary: Actualizar una patologia.
+ *     description: EndPoint para actualizar un registro.
+ *     tags: [Patologias]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         description: El ID de la patologia para actualizar.
+ *         schema:
+ *           type: string
+ *         required: true
+ *         example: 1
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Patologias'
+ *       required: true
+ *     responses:
+ *       200:
+ *         description: Patologia actualizada.
+ *       400:
+ *         description: Error al actualizar la patologia.
+ *       500:
+ *         description: Error interno del servidor.
+ */
+router.put("/:id", updatePatologias);
 
-  /**
-   * @swagger
-   * /api/v1/patologia/:
-   *   put:
-   *     summary: Actualizar una patologia
-   *     description: EndPoint para actualizar un registro.
-   *     tags: [Patologias]
-   *     requestBody:
-   *       content:
-   *         application/json:
-   *           schema:
-   *             $ref: '#/components/schemas/Patologias'
-   *       required: true
-   *     parameters:
-   *       - in: body
-   *         name: name
-   *         description: name de la patologia.
-   *         schema:
-   *           type: string
-   *         required: true
-   *         example: Hospital Pediatrico
-   *       - in: body
-   *         name: description
-   *         schema:
-   *           type: string
-   *         required: true
-   *         description: Descripción de la patologia.
-   *         example: Especialistas en el tratamiento del cancer.
-   *       - in: body
-   *         name: active
-   *         schema:
-   *           type: boolean
-   *         required: true
-   *         description: Estar en false significa eliminado.
-   *         example: true
-   *     responses:
-   *       200:
-   *         description: Nueva patologia creada.
-   *       400:
-   *         description: Error al crear la patologia.
-   *       500:
-   *         description: Error interno del servidor
-   */
+// Eliminación lógica de una Patologia.
+/**
+ * @swagger
+ * /api/v1/patologia/{id}:
+ *   patch:
+ *     summary: Eliminación lógica de una patologia.
+ *     description: EndPoint para marcar una patologia como eliminada sin borrar el registro de la base de datos.
+ *     tags: [Patologias]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         description: El ID de la patologia para eliminar lógicamente.
+ *         schema:
+ *           type: string
+ *         required: true
+ *         example: 1
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Patologias'
+ *       required: true
+ *     responses:
+ *       200:
+ *         description: Patologia marcada como eliminada.
+ *       400:
+ *         description: Error al eliminar la patologia.
+ *       500:
+ *         description: Error interno del servidor.
+ */
+router.patch("/:id", logicalDeletePatologias);
 
-  .put("/:id", updatePatologias)
-
-  /**
-   * @swagger
-   * /api/v1/patologia/:
-   *   patch:
-   *     summary: Actualizar una patologia
-   *     description: EndPoint para actualizar un registro.
-   *     tags: [Patologias]
-   *     requestBody:
-   *       content:
-   *         application/json:
-   *           schema:
-   *             $ref: '#/components/schemas/Patologias'
-   *       required: true
-   *     parameters:
-   *       - in: body
-   *         name: name
-   *         description: name de la patologia.
-   *         schema:
-   *           type: string
-   *         required: true
-   *         example: Hospital Pediatrico
-   *       - in: body
-   *         name: description
-   *         schema:
-   *           type: string
-   *         required: true
-   *         description: Descripción de la patologia.
-   *         example: Especialistas en el tratamiento del cancer.
-   *       - in: body
-   *         name: active
-   *         schema:
-   *           type: boolean
-   *         required: true
-   *         description: Estar en false significa eliminado.
-   *         example: true
-   *     responses:
-   *       200:
-   *         description: Nueva patologia creada.
-   *       400:
-   *         description: Error al crear la patologia.
-   *       500:
-   *         description: Error interno del servidor
-   */
-  .patch("/:id", logicalDeletePatologias);
+// Eliminación física de una Patologia.
+/**
+ * @swagger
+ * /api/v1/patologia/{id}:
+ *   delete:
+ *     summary: Eliminación física de una patologia.
+ *     description: EndPoint para borrar un registro de la base de datos.
+ *     tags: [Patologias]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         description: El ID de la patologia para eliminar físicamente.
+ *         schema:
+ *           type: string
+ *         required: true
+ *         example: 1
+ *     responses:
+ *       200:
+ *         description: Patologia eliminada.
+ *       400:
+ *         description: Error al eliminar la patologia.
+ *       500:
+ *         description: Error interno del servidor.
+ */
 router.delete("/:id", physicalDeletePatologias);
 
 /**
  * @swagger
- * tags:
- *   name: Patologias
- *   description: Patologias API.
- *
  * components:
  *   schemas:
- *      Patologias:
+ *     Patologias:
  *       type: object
  *       properties:
  *         name:
  *           type: string
- *           description: nombre de la patologia
- *         descripcion:
- *            type: string
- *            description: descripcion de la patologia
+ *           description: Nombre de la patologia.
+ *         description:
+ *           type: string
+ *           description: Descripción de la patologia.
  *         active:
  *           type: boolean
- *           description: al ser false se considera eliminada
+ *           description: Estado activo de la patologia.
  *       required:
  *         - name
  *         - description
- *         - activo
+ *         - active
  *       example:
  *         name: Hospital de Oncologia
  *         description: Especialistas en cancer
  *         active: true
- *
  */
 
 module.exports = router;
