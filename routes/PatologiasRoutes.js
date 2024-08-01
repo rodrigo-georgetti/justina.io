@@ -2,11 +2,11 @@ const express = require("express");
 const router = express.Router();
 const {
   getPatologias,
-    createPatologias,
-    updatePatologias,
-    deletePatologias
+  createPatologias,
+  updatePatologias,
+  logicalDeletePatologias,
+  physicalDeletePatologias,
 } = require("../controllers/PatologiasControllers");
-
 
 /**
  * @swagger
@@ -196,8 +196,8 @@ router
    *       500:
    *         description: Error interno del servidor
    */
-  .patch("/:id", deletePatologias);
-// router.delete('/:id', physicalDeleteUsers);
+  .patch("/:id", logicalDeletePatologias);
+router.delete("/:id", physicalDeletePatologias);
 
 /**
  * @swagger

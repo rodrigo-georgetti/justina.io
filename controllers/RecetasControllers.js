@@ -1,12 +1,5 @@
 const { Recetas } = require("../database/db");
 
-/* module.exports = {
-  async All(req, res) {
-    let Recetas = await Recetas.findAll();
-    res.json(Recetas);
-  },
-}; */
-
 const getRecetas = async (req, res) => {
   const { id } = req.params;
 

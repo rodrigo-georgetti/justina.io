@@ -1,102 +1,135 @@
 const { Patologias } = require("../database/db");
 
-/* module.exports = {
-  async All(req, res) {
-    let Entidades = await Entidades.findAll();
-    res.json(Entidades);
-  },
-}; */
-
 const getPatologias = async (req, res) => {
-    const {id} = req.params;
-    
-    try {
-        if (id) {
-            const Patologia = await Patologias.findByPk(id);
-            if (Patologia) {
-                res.status(200).json(Patologia);
-            } else {
-                res.status(404).json({ message: 'Patologia no encontrado' });
-            }
-        } else {
-            const Patologia = await Patologias.findAll();
-            res.status(200).json(Patologia);
-        }
-    } catch (error) {
-        console.error('Error al obtener la Patologia', error);
-        res.status(500).json({ message: 'Error al obtener las Patologias', error });
-    }
-}
+  const { id } = req.params;
 
+  try {
+    if (id) {
+      const Patologia = await Patologias.findByPk(id, {
+        attributes: ["id", "name", "especialidadesId", "description", "active"],
+      });
+      if (Patologia) {
+        res.status(200).json(Patologia);
+      } else {
+        res.status(404).json({ message: "Patologia no encontrado" });
+      }
+    } else {
+      const Patologia = await Patologias.findAll({
+        attributes: ["id", "name", "especialidadesId", "description", "active"],
+      });
+      res.status(200).json(Patologia);
+    }
+  } catch (error) {
+    console.error("Error al obtener la Patologia", error);
+    res.status(500).json({ message: "Error al obtener las Patologias", error });
+  }
+};
 
 const createPatologias = async (req, res) => {
-    const { name, description,especialidadesId, active } = req.body;
-  
-    try {
-        const newPatologia = await Patologias.create({
-            name,
-            description,
-            especialidadesId,
-            active
-        });
+  const { name, description, especialidadesId, active } = req.body;
 
-        res.status(201).json({ message: 'Patologia creada correctamente', Entidad: newPatologia });
-    } catch (error) {
-        console.error('Error al crear Patologia:', error);
-        res.status(500).json({ message: 'Error al crear Patologia', error });
-    }
+  try {
+    const newPatologia = await Patologias.create({
+      name,
+      description,
+      especialidadesId,
+      active,
+    });
+
+    res
+      .status(201)
+      .json({
+        message: "Patologia creada correctamente",
+        Entidad: newPatologia,
+      });
+  } catch (error) {
+    console.error("Error al crear Patologia:", error);
+    res.status(500).json({ message: "Error al crear Patologia", error });
+  }
 };
-
 
 const updatePatologias = async (req, res) => {
-    const {id} = req.params;
-    const { name, description,especialidadesId, active } = req.body;
-    
-    try {
-        const Patologia = await Patologias.findByPk(id);
-        if (Patologia) {
-            Patologia.name = name;
-            Patologia.description = description;
-            Patologia.especialidadesId = especialidadesId;
-            Patologia.active = active;
-            await Patologia.save();
-            res.status(200).json({ message: 'Patologia actualizado', Patologia });
-        } else {
-            res.status(404).json({ message: 'Patologia no encontrado' });
-        }
-    } catch (error) {
-        console.error('Error al actualizar Patologia:', error);
-        res.status(500).json({ message: 'Error al actualizar Patologia', error });
+  const { id } = req.params;
+  const { name, description, especialidadesId, active } = req.body;
+
+  try {
+    const Patologia = await Patologias.findByPk(id, {
+      attributes: ["id", "name", "especialidadesId", "description", "active"],
+    });
+    if (Patologia) {
+      if (name !== undefined) Patologia.name = name;
+      if (especialidadesId !== undefined)
+        Patologia.especialidadesId = especialidadesId;
+      if (description !== undefined) Patologia.description = description;
+      if (active !== undefined) Patologia.active = active;
+
+      await Patologia.save();
+      res.status(200).json({ message: "Patologia actualizado", Patologia });
+    } else {
+      res.status(404).json({ message: "Patologia no encontrado" });
     }
+  } catch (error) {
+    console.error("Error al actualizar Patologia:", error);
+    res.status(500).json({ message: "Error al actualizar Patologia", error });
+  }
 };
 
+const logicalDeletePatologias = async (req, res) => {
+  const patologiaId = req.params.id;
+  const { active } = req.body;
 
-const deletePatologias = async (req, res) => {
-    const {id} = req.params;
-    const { active } = req.body;
-    
-    try {
-        const Patologia = await Patologias.findByPk(id);
-        if (Patologia) {
-            Patologia.active = active;
-            await Patologia.save();
-            if ((active === true)) {
-                res.status(200).json({ message: "Patologia activada" });
-              } else {
-                res.status(200).json({ message: "Patologia eliminada" });
-              }
-        } else {
-            res.status(404).json({ message: 'Entidad no encontrada' });
-        }
-    } catch (error) {
-        console.error('Error al eliminar Entidad:', error);
-        res.status(500).json({ message: 'Error al eliminar Entidad', error });
+  if (typeof active !== "boolean") {
+    return res
+      .status(400)
+      .json({ message: "El campo 'active' debe ser un valor booleano" });
+  }
+
+  try {
+    const patologias = await Patologias.findByPk(patologiaId, {
+      attributes: ["id", "name", "especialidadesId", "description", "active"],
+    });
+
+    if (!patologias) {
+      return res.status(404).json({ message: "Patología no encontrada" });
     }
+
+    patologias.active = active;
+    await patologias.save();
+
+    const status = patologias.active ? "activado" : "desactivado";
+    res.status(200).json({ message: `Patologías ${status}` });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: "Error al actualizar el estado de la patología",
+      error,
+    });
+  }
+};
+
+const physicalDeletePatologias = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const Patologia = await Patologias.findByPk(id, {
+      attributes: ["id", "name", "especialidadesId", "description", "active"],
+    });
+    if (Patologia) {
+      await Patologia.destroy();
+      res.status(200).json({ message: "Patologia eliminada" });
+    } else {
+      res.status(404).json({ message: "Patologia no encontrada" });
+    }
+  } catch (error) {
+    console.error("Error al eliminar Patologia:", error);
+    res.status(500).json({ message: "Error al eliminar Patologia", error });
+  }
 };
 
 module.exports = {
-    getPatologias,
-    createPatologias,
-    updatePatologias,
-    deletePatologias
+  getPatologias,
+  createPatologias,
+  updatePatologias,
+  logicalDeletePatologias,
+  physicalDeletePatologias,
 };
