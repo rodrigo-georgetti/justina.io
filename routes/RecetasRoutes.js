@@ -4,7 +4,8 @@ const {
   getRecetas,
   createRecetas,
   updateRecetas,
-  deleteRecetas,
+  //logicalDeleteRecetas,
+  //physicalDeleteRecetas,
 } = require("../controllers/RecetasControllers");
 
 
@@ -152,7 +153,7 @@ router
    */
 
   .put("/:id", updateRecetas)
-  .patch("/:id", deleteRecetas);
+  //.patch("/:id", deleteRecetas);
 // router.delete('/:id', physicalDeleteUsers);
 
 /**
