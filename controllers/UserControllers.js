@@ -1,4 +1,5 @@
 const { Users, Ubicaciones } = require("../database/db");
+const bcrypt = require ('bcrypt');
 
 const getUsers = async (req, res) => {
   const { id } = req.params;
@@ -99,10 +100,13 @@ const createUsers = async (req, res) => {
   } = req.body;
 
   try {
+
+    const hashedPassword = await bcrypt.hash(password, 10)
+
     const newUser = await Users.create({
       dniType,
       dni,
-      password,
+      password: hashedPassword,
       firstName,
       lastName,
       birthday,

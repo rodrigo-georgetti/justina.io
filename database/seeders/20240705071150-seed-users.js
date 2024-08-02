@@ -1,15 +1,19 @@
 "use strict";
 
+const bcrypt = require("bcrypt");
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
+    const hashedPassword = await bcrypt.hash("1234", 10)
+
     await queryInterface.bulkInsert(
       "Users",
       [
         {          
           dniType: "libreta civica",
           dni: 1,
-          password: "1234",
+          password: hashedPassword,
           firstName: "admin",
           lastName: "root",
           role: 'MEDICO',           
@@ -29,7 +33,7 @@ module.exports = {
           active: true,
           birthday: "2000-10-10",
           gender: "Male",
-          password: "1234",
+          password: hashedPassword,
         },
         {
           dni: 3,
@@ -41,7 +45,7 @@ module.exports = {
           active: true,
           birthday: "2000-10-10",
           gender: "Male",
-          password: "1234",
+          password: hashedPassword,
         },
         {
           dni: 4,
@@ -53,7 +57,7 @@ module.exports = {
           active: true,
           birthday: "2000-10-10",
           gender: "Male",
-          password: "1234",
+          password: hashedPassword,
         },
         {
           dni: 5,
@@ -65,7 +69,7 @@ module.exports = {
           active: true,
           birthday: "2000-10-10",
           gender: "Male",
-          password: "1234",
+          password: hashedPassword,
         },
         {
           dni: 6,
@@ -77,7 +81,7 @@ module.exports = {
           active: true,
           birthday: "2000-10-10",
           gender: "Male",
-          password: "1234",
+          password: hashedPassword,
         },
         {
           dni: 7,
@@ -89,7 +93,7 @@ module.exports = {
           active: true,
           birthday: "2000-10-10",
           gender: "Male",
-          password: "1234",
+          password: hashedPassword,
         },
         {
           dni: 8,
@@ -101,7 +105,7 @@ module.exports = {
           active: true,
           birthday: "2000-10-10",
           gender: "Male",
-          password: "1234",
+          password: hashedPassword,
         },
         {
           dni: 9,
@@ -113,7 +117,7 @@ module.exports = {
           active: true,
           birthday: "2000-10-10",
           gender: "Male",
-          password: "1234",
+          password: hashedPassword,
         },
         {
           dni: 10,
@@ -125,7 +129,7 @@ module.exports = {
           active: true,
           birthday: "2000-10-10",
           gender: "Male",
-          password: "1234",
+          password: hashedPassword,
         },
       ],
       {}
