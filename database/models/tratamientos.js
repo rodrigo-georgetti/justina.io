@@ -25,6 +25,11 @@ module.exports = (sequelize, DataTypes) => {
       pacientesId: { type: DataTypes.INTEGER, allowNull: false },
       personalMedicoId: { type: DataTypes.INTEGER, allowNull: false },
       active: { type: DataTypes.BOOLEAN, defaultValue: true },
+      status: {
+        type: DataTypes.ENUM("lo tomo", "pospuso", "no lo tomo"),
+        allowNull: false,
+        defaultValue: "lo tomo"
+       },
     },
     {
       sequelize,

@@ -13,6 +13,9 @@ const getTratamientos = async (req, res) => {
           "pacientesId",
           "personalMedicoId",
           "active",
+          "status",
+          "createdAt",
+          "updateAt"
         ],
       });
       if (Tratamiento) {
@@ -29,6 +32,9 @@ const getTratamientos = async (req, res) => {
           "pacientesId",
           "personalMedicoId",
           "active",
+          "status",
+          "createdAt",
+          "updateAt"
         ],
       });
       res.status(200).json(Tratamiento);
@@ -42,7 +48,7 @@ const getTratamientos = async (req, res) => {
 };
 
 const createTratamientos = async (req, res) => {
-  const { description, patologiasId, pacientesId, personalMedicoId, active } =
+  const { description, patologiasId, pacientesId, personalMedicoId, active, status } =
     req.body;
 
   try {
@@ -52,6 +58,7 @@ const createTratamientos = async (req, res) => {
       pacientesId,
       personalMedicoId,
       active,
+      status
     });
 
     res.status(201).json({
@@ -66,7 +73,7 @@ const createTratamientos = async (req, res) => {
 
 const updateTratamientos = async (req, res) => {
   const { id } = req.params;
-  const { description, patologiasId, pacientesId, personalMedicoId, active } =
+  const { description, patologiasId, pacientesId, personalMedicoId, active, status } =
     req.body;
 
   try {
@@ -78,6 +85,9 @@ const updateTratamientos = async (req, res) => {
         "pacientesId",
         "personalMedicoId",
         "active",
+        "status",
+        "createdAt",
+        "updatedAt"
       ],
     });
     if (Tratamiento) {

@@ -41,6 +41,11 @@ module.exports = {
         type: Sequelize.BOOLEAN, 
         defaultValue: true
       }, 
+      status: {
+        type: Sequelize.ENUM('lo tomo', 'pospuso', 'no lo tomo'),
+        allowNull: false,
+        defaultValue: 'lo tomo'
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
