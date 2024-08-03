@@ -7,9 +7,12 @@ module.exports = (sequelize, DataTypes) => {
       id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
       dniType: {
         type: DataTypes.ENUM(
+          "PASAPORTE",
           "DNI",
           "LIBRETA DE ENROLAMIENTO",
-          "LIBRETA CIVICA"
+          "LIBRETA CÍVICA",
+          "CUIL",
+          "CÉDULA"
         ),
         defaultValue: "DNI",
         allowNull: false,
@@ -42,6 +45,7 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: "usuariosId",
     });
   };
-
+//agregar TerminosYCondiciones
   return Users;
 };
+ 
