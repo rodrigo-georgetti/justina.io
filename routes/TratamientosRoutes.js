@@ -174,27 +174,37 @@ router.delete("/:id", physicalDeleteTratamientos);
  *     Tratamientos:
  *       type: object
  *       properties:
- *         usuariosId:
+ *         especialidadesId:
  *           type: integer
- *           description: ID del usuario asociado.
- *         nombre:
- *           type: string
- *           description: Nombre del tratamiento.
- *         descripcion:
+ *           description: ID de la especialidad asociada al tratamiento.
+ *         pacientesId:
+ *           type: integer
+ *           description: ID del paciente asociado al tratamiento.
+ *         personalMedicoId:
+ *           type: integer
+ *           description: ID del personal médico asignado al tratamiento.
+ *         description:
  *           type: string
  *           description: Descripción del tratamiento.
+ *         status:
+ *           type: string
+ *           description: Estado del tratamiento.
  *         active:
  *           type: boolean
  *           description: Estado del tratamiento, true si está activo, false si está eliminado.
  *       required:
- *         - usuariosId
- *         - nombre
- *         - descripcion
+ *         - especialidadesId
+ *         - pacientesId
+ *         - personalMedicoId
+ *         - description
+ *         - status
  *         - active
  *       example:
- *         usuariosId: 1
- *         nombre: Tratamiento de Oncología
- *         descripcion: Especialistas en cáncer.
+ *         especialidadesId: 1
+ *         pacientesId: 1
+ *         personalMedicoId: 1
+ *         description: Tratamiento para la diabetes tipo 2.
+ *         status: En progreso
  *         active: true
  */
 
