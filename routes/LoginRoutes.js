@@ -15,15 +15,18 @@ const { loginUser } = require("../controllers/loginController");
  *           schema:
  *             type: object
  *             properties:
- *               email:
+ *               dniType:
  *                 type: string
- *                 example: user@example.com
+ *                 example: 'dni'
+ *               dni:
+ *                 type: string
+ *                 example: 39442531
  *               password:
  *                 type: string
  *                 example: Password123
  *     responses:
  *       200:
- *         description: User logged in
+ *         description: User logged in successfully
  *         content:
  *           application/json:
  *             schema:
@@ -38,6 +41,7 @@ const { loginUser } = require("../controllers/loginController");
  *       500:
  *         description: Internal server error
  */
+
 router.post("/", loginUser);
 
 module.exports = router;
