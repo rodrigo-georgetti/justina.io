@@ -15,7 +15,7 @@ const getTratamientos = async (req, res) => {
           "active",
           "status",
           "createdAt",
-          "updateAt"
+          "updatedAt"
         ],
       });
       if (Tratamiento) {
@@ -34,7 +34,7 @@ const getTratamientos = async (req, res) => {
           "active",
           "status",
           "createdAt",
-          "updateAt"
+          "updatedAt"
         ],
       });
       res.status(200).json(Tratamiento);
