@@ -72,7 +72,32 @@ router.get("/:id", getTratamientos);
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Tratamientos'
+ *             type: object
+ *             properties:
+ *               description:
+ *                 type: string
+ *                 description: Descripción del tratamiento.
+ *                 example: "Tratamiento para fiebre"
+ *               especialidadesId:
+ *                 type: integer
+ *                 description: ID de la especialidad asociada.
+ *                 example: 2
+ *               pacientesId:
+ *                 type: integer
+ *                 description: ID del paciente asociado.
+ *                 example: 3
+ *               personalMedicoId:
+ *                 type: integer
+ *                 description: ID del personal médico asociado.
+ *                 example: 4
+ *               active:
+ *                 type: boolean
+ *                 description: Indica si el tratamiento está activo.
+ *                 example: true
+ *               status:
+ *                 type: string
+ *                 description: Estado del tratamiento.
+ *                 example: "lo tomo", "pospuso", "no lo tomo"
  *     responses:
  *       201:
  *         description: Nuevo tratamiento creado con éxito.
@@ -104,7 +129,32 @@ router.post("/", createTratamientos);
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Tratamientos'
+ *             type: object
+ *             properties:
+ *               description:
+ *                 type: string
+ *                 description: Descripción del tratamiento.
+ *                 example: "Tratamiento para fiebre"
+ *               especialidadesId:
+ *                 type: integer
+ *                 description: ID de la especialidad asociada.
+ *                 example: 2
+ *               pacientesId:
+ *                 type: integer
+ *                 description: ID del paciente asociado.
+ *                 example: 3
+ *               personalMedicoId:
+ *                 type: integer
+ *                 description: ID del personal médico asociado.
+ *                 example: 4
+ *               active:
+ *                 type: boolean
+ *                 description: Indica si el tratamiento está activo.
+ *                 example: true
+ *               status:
+ *                 type: string
+ *                 description: Estado del tratamiento.
+ *                 example: "En progreso"
  *     responses:
  *       200:
  *         description: Tratamiento actualizado con éxito.
@@ -131,11 +181,22 @@ router.put("/:id", updateTratamientos);
  *           type: integer
  *         required: true
  *         example: 1
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               active:
+ *                 type: boolean
+ *                 description: Indica si el tratamiento está activo o inactivo.
+ *                 example: false
  *     responses:
  *       200:
  *         description: Tratamiento eliminado lógicamente con éxito.
  *       400:
- *         description: Error al eliminar el tratamiento.
+ *         description: Error al eliminar lógicamente el tratamiento.
  *       500:
  *         description: Error interno del servidor.
  */
@@ -146,13 +207,13 @@ router.patch("/:id", logicalDeleteTratamientos);
  * @swagger
  * /api/v1/tratamiento/{id}:
  *   delete:
- *     summary: Eliminar físicamente un tratamiento.
+ *     summary: Eliminar un tratamiento.
  *     description: Endpoint para eliminar físicamente un tratamiento existente.
  *     tags: [Tratamientos]
  *     parameters:
  *       - in: path
  *         name: id
- *         description: El ID del tratamiento a eliminar físicamente.
+ *         description: El ID del tratamiento a eliminar.
  *         schema:
  *           type: integer
  *         required: true
@@ -166,46 +227,5 @@ router.patch("/:id", logicalDeleteTratamientos);
  *         description: Error interno del servidor.
  */
 router.delete("/:id", physicalDeleteTratamientos);
-
-/**
- * @swagger
- * components:
- *   schemas:
- *     Tratamientos:
- *       type: object
- *       properties:
- *         especialidadesId:
- *           type: integer
- *           description: ID de la especialidad asociada al tratamiento.
- *         pacientesId:
- *           type: integer
- *           description: ID del paciente asociado al tratamiento.
- *         personalMedicoId:
- *           type: integer
- *           description: ID del personal médico asignado al tratamiento.
- *         description:
- *           type: string
- *           description: Descripción del tratamiento.
- *         status:
- *           type: string
- *           description: Estado del tratamiento.
- *         active:
- *           type: boolean
- *           description: Estado del tratamiento, true si está activo, false si está eliminado.
- *       required:
- *         - especialidadesId
- *         - pacientesId
- *         - personalMedicoId
- *         - description
- *         - status
- *         - active
- *       example:
- *         especialidadesId: 1
- *         pacientesId: 1
- *         personalMedicoId: 1
- *         description: Tratamiento para la diabetes tipo 2.
- *         status: En progreso
- *         active: true
- */
 
 module.exports = router;
