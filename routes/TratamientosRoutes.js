@@ -97,7 +97,8 @@ router.get("/:id", getTratamientos);
  *               status:
  *                 type: string
  *                 description: Estado del tratamiento.
- *                 example: "lo tomo", "pospuso", "no lo tomo"
+ *                 enum: ["lo tomo", "pospuso", "no lo tomo"]
+ *                 example: "lo tomo"
  *     responses:
  *       201:
  *         description: Nuevo tratamiento creado con éxito.
@@ -154,7 +155,8 @@ router.post("/", createTratamientos);
  *               status:
  *                 type: string
  *                 description: Estado del tratamiento.
- *                 example: "En progreso"
+ *                 enum: ["lo tomo", "pospuso", "no lo tomo"]
+ *                 example: "lo tomo"
  *     responses:
  *       200:
  *         description: Tratamiento actualizado con éxito.
